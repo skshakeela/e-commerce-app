@@ -8,6 +8,7 @@ import org.jsp.ecommerceapp.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -21,6 +22,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping("/users")
+@CrossOrigin
 public class UserController {
  @Autowired
 	private UserService userService;
@@ -55,6 +57,12 @@ public class UserController {
 	public ResponseEntity<ResponseStructure<User>> verifyMerchant(@RequestParam long phone,
 			@RequestParam String password) {
 		return userService.verifyMerchant(phone, password);
+	}
+	
+	@PostMapping("/verify-by-email")
+	public ResponseEntity<ResponseStructure<User>> verifyMerchant(@RequestParam String email,
+			@RequestParam String password) {
+		return userService.verifyMerchant(email, password);
 	}
 
 	@GetMapping("/find-by-name/{name}")

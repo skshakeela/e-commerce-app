@@ -42,5 +42,9 @@ public class UserDao {
 	public Optional<User> verify(long phone, String password) {
 		return userRepository.verify(phone, password);
 	}
+	
+	public Optional<User> verify(String email, String password) {
+		return userRepository.verify(email, password);
+	}
 
 }

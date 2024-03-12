@@ -8,22 +8,31 @@ import org.jsp.ecommerceapp.dto.ResponseStructure;
 import org.jsp.ecommerceapp.exception.IdNotFoundException;
 import org.jsp.ecommerceapp.exception.InvalidCredentialsException;
 import org.jsp.ecommerceapp.model.Merchant;
+import org.jsp.ecommerceapp.util.AccountStatus;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
+import jakarta.servlet.http.HttpServletRequest;
+import net.bytebuddy.utility.RandomString;
+
 @Service
 public class MerchantService {
 	@Autowired
 	private MerchantDao merchantDao;
+	@Autowired
+	private ECommerceAppEmailService emailService;
 	
-	public ResponseEntity<Merchant> saveMerchant(Merchant merchant){
+	public ResponseEntity<ResponseStructure<Merchant>> saveMerchant(Merchant merchant,HttpServletRequest request){
 		ResponseStructure<Merchant> structure=new ResponseStructure<>();
-		structure.setMessage("merchant saved");
+		merchant.setStatus(AccountStatus.IN_ACTIVE.toString());
+		merchant.setToken(RandomString.make(45));
+		String message=emailService.sendWelcomeMail(merchant, request);
+		structure.setMessage("merchant saved"+" ,"+message);
 		structure.setBody(merchantDao.saveMerchant(merchant));
 		structure.setStatusCode(HttpStatus.CREATED.value());
-		return new ResponseEntity<Merchant>(HttpStatus.CREATED);
+		return new ResponseEntity<>(structure,HttpStatus.CREATED);
 	}
 	
 	public ResponseEntity<ResponseStructure<Merchant>> updateMerchant(Merchant merchant) {

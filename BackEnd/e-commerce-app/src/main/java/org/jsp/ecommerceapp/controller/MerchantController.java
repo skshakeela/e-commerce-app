@@ -20,6 +20,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
+import jakarta.servlet.http.HttpServletRequest;
+
 @RestController
 @CrossOrigin
 @RequestMapping("/merchants")
@@ -28,8 +30,8 @@ public class MerchantController {
 	private MerchantService merchantService;
 	@PostMapping
 	@ResponseStatus(code = HttpStatus.CREATED)
-	public ResponseEntity<Merchant> saveMerchant(@RequestBody Merchant merchant){
-		return merchantService.saveMerchant(merchant);
+	public ResponseEntity<ResponseStructure<Merchant>> saveMerchant(@RequestBody Merchant merchant,HttpServletRequest request){
+		return merchantService.saveMerchant(merchant,request);
 	}
 	@PutMapping
 	public ResponseEntity<ResponseStructure<Merchant>> updateMerchant(@RequestBody Merchant merchant) {

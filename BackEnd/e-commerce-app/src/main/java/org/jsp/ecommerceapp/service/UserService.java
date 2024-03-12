@@ -95,6 +95,19 @@ public class UserService {
 	}
 	
 	
+	public ResponseEntity<ResponseStructure<User>> verifyMerchant(String email, String password) {
+		Optional<User> recUser = userDao.verify(email, password);
+		ResponseStructure<User> structure = new ResponseStructure<>();
+		if (recUser.isPresent()) {
+			structure.setMessage("Verification Succesfull");
+			structure.setBody(recUser.get());
+			structure.setStatusCode(HttpStatus.OK.value());
+			return new ResponseEntity<ResponseStructure<User>>(structure, HttpStatus.OK);
+		}
+		throw new InvalidCredentialsException("invalid email or password");
+	}
+	
+	
 	public ResponseEntity<ResponseStructure<List<User>>> findByName(String name) {
 		ResponseStructure<List<User>> structure = new ResponseStructure<>();
 		List<User> users = userDao.findByName(name);

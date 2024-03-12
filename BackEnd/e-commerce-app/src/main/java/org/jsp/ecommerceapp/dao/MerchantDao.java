@@ -13,6 +13,7 @@ public class MerchantDao {
 	@Autowired
 	private MerchantRepository merchantRepository;
 	
+	
 	public Merchant saveMerchant(Merchant merchant) {
 		return merchantRepository.save(merchant);
 	}
