@@ -68,4 +68,8 @@ public class MerchantController {
 	public ResponseEntity<ResponseStructure<List<Merchant>>> findByName(@PathVariable String name) {
 		return merchantService.findByName(name);
 	}
+	@GetMapping("/activate-merchant")
+	public ResponseEntity<ResponseStructure<String>> activate(@RequestParam String token){
+		return merchantService.activate(token);
+	}
 }

@@ -7,10 +7,12 @@ import org.jsp.ecommerceapp.dao.MerchantDao;
 import org.jsp.ecommerceapp.dto.ResponseStructure;
 import org.jsp.ecommerceapp.exception.IdNotFoundException;
 import org.jsp.ecommerceapp.exception.InvalidCredentialsException;
+import org.jsp.ecommerceapp.exception.MerchantNotFoundException;
 import org.jsp.ecommerceapp.model.Merchant;
 import org.jsp.ecommerceapp.util.AccountStatus;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
@@ -128,5 +130,21 @@ public class MerchantService {
 		structure.setMessage("No Merchant found with the entered name ");
 		structure.setStatusCode(HttpStatus.NOT_FOUND.value());
 		return new ResponseEntity<ResponseStructure<List<Merchant>>>(structure, HttpStatus.NOT_FOUND);
+	}
+	
+	public ResponseEntity<ResponseStructure<String>> activate(String token){
+		Optional<Merchant> recMerchant=merchantDao.findByToken(token);
+		ResponseStructure<String> structure=new ResponseStructure<>();
+		if(recMerchant.isPresent()) {
+			Merchant merchant=recMerchant.get();
+			merchant.setStatus(AccountStatus.ACTIVE.toString());
+			merchant.setToken(null);
+			merchantDao.saveMerchant(merchant);
+			structure.setBody("merchant found");
+			structure.setMessage("Account Verified and Activated");
+			structure.setStatusCode(HttpStatus.ACCEPTED.value());
+			return new ResponseEntity<ResponseStructure<String>>(structure, HttpStatus.ACCEPTED);
+		}
+      throw new MerchantNotFoundException("Invalid url");
 	}
 }
