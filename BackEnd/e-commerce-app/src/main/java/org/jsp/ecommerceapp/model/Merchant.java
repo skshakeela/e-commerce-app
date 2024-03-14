@@ -1,10 +1,13 @@
 package org.jsp.ecommerceapp.model;
 
+import java.util.List;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
 
 @Entity
 public class Merchant {
@@ -23,8 +26,16 @@ public class Merchant {
 	private String password;
 	private String status;
 	private String token;
+	@OneToMany(mappedBy = "merchant")
+	private List<Product> products;
 	
 	
+	public List<Product> getProducts() {
+		return products;
+	}
+	public void setProducts(List<Product> products) {
+		this.products = products;
+	}
 	public String getToken() {
 		return token;
 	}
