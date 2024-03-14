@@ -1,0 +1,23 @@
+.landingPage{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 80vh;
+    text-align: center;
+}
+.landingPage img{
+    height: 200px;
+    width: 200px;
+    margin: 20px 50px;
+    transition: .5s;
+}
+.landingPage img:hover{
+    transform: scale(1.2);
+}
+.landingPage a{
+    text-decoration: none;
+    font-size: larger;
+    color: black;
+    font-family: cursive;
+    background-color: transparent;
+}
