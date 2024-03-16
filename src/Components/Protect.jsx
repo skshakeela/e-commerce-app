@@ -10,9 +10,11 @@ function Protect({Child}){
                   return true;
             }
           }
+  
   return (
     <div>
        {verifyProtect()?<Child/>:<Navigate to="/merchantlogin"/>}
+      
     </div>
   )
 }

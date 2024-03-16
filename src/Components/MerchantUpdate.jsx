@@ -1,17 +1,42 @@
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import "../styles/MerchantUpdate.css"
+import axios from "axios"
 function MerchantUpdate () {
   let[name,setName]=useState("")
   let[email,setEmail]=useState("")
   let[phone,setPhone]=useState("")
   let[gst_number,setGst_number]=useState("")
   let[password,setPassword]=useState("")
+  let[id,setId]=useState("")
 
-  let data={name,email,phone,gst_number,password}
+  let data={id,name,email,phone,gst_number,password}
+ let merchant=JSON.parse(localStorage.getItem("Merchant"))
+  useEffect(()=>{
+    setId(merchant.id)
+    setName(merchant.name)
+    setGst_number(merchant.gst_number)
+    setEmail(merchant.email)
+    setPassword(merchant.password)
+    setPhone(merchant.phone)
+  },[])
+
+  let updateData=(e)=>{
+    e.preventDefault();
+    axios.put(`http://localhost:8080/merchants`,data)
+    .then((res)=>{
+      console.log(res);
+      alert("data updated successfully")
+    })
+    .catch(()=>{
+    alert("error")
+    })
+  }
   return (
    
        <div className="merchantupdate">
-<form action="">
+<form onSubmit={updateData} action="">
+  <label htmlFor="">Id</label>
+  <input type="text" value={id} onChange={(e)=>{setId(e.target.value)}}/>
     <label htmlFor="">Name</label>
     <input type="text" placeholder="Enter the Name" value={name} onChange={(e)=>{setName(e.target.value)}}/> 
     <label htmlFor="">Email</label>

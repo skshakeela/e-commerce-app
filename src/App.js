@@ -5,7 +5,6 @@ import MerchantLogin from "./Components/MerchantLogin"
 import 'bootstrap/dist/css/bootstrap.min.css';
 import MerchantSignup from "./Components/MerchantSignup";
 import MerchantHomePage from "./Components/MerchantHomePage";
-import UserHomePage from "./Components/UserHomePage";
 import UserSignup from "./Components/UserSignup";
 import Error from "./Components/Error";
 import Protect from "./Components/Protect";
@@ -22,9 +21,7 @@ function App() {
       <Route path="/merchanthomepage/*" element={<Protect Child={MerchantHomePage}/>}></Route>
       <Route path="/userlogin" element={<UserLogin/>}></Route>
       <Route path="/usersignup" element={<UserSignup/>}></Route>
-      <Route path="/userhomepage" element={<UserHomePage/>}></Route>
       
-     
      </Routes>
      </BrowserRouter>
     </div>
