@@ -3,6 +3,7 @@ package org.jsp.ecommerceapp.repository;
 import java.util.List;
 import java.util.Optional;
 
+import org.jsp.ecommerceapp.model.Merchant;
 import org.jsp.ecommerceapp.model.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -16,5 +17,7 @@ public interface UserRepository  extends JpaRepository<User, Integer>{
 	   
 	   @Query("select u from User u where u.name=?1")
 	   public List<User> findByName(String name);
+	   
+	   public Optional<User> findByToken(String token);
 	}
 

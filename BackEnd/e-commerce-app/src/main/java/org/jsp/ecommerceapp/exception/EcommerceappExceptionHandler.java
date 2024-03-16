@@ -29,9 +29,19 @@ public class EcommerceappExceptionHandler extends ResponseEntityExceptionHandler
     
 
     @ExceptionHandler(MerchantNotFoundException.class)
-   	public ResponseEntity<ResponseStructure<String>> handlerINFE(MerchantNotFoundException exception){
+   	public ResponseEntity<ResponseStructure<String>> handlerMNFE(MerchantNotFoundException exception){
    	ResponseStructure<String> structure=new ResponseStructure<>();
    	structure.setBody(" Merchant not found");
+   	structure.setMessage(exception.getMessage());
+   	structure.setStatusCode(HttpStatus.NOT_FOUND.value());
+   	return new ResponseEntity<ResponseStructure<String>>(structure,HttpStatus.NOT_FOUND);
+   	}
+    
+
+    @ExceptionHandler(UserNotFoundException.class)
+   	public ResponseEntity<ResponseStructure<String>> handlerUNFE(UserNotFoundException exception){
+   	ResponseStructure<String> structure=new ResponseStructure<>();
+   	structure.setBody(" User not found");
    	structure.setMessage(exception.getMessage());
    	structure.setStatusCode(HttpStatus.NOT_FOUND.value());
    	return new ResponseEntity<ResponseStructure<String>>(structure,HttpStatus.NOT_FOUND);

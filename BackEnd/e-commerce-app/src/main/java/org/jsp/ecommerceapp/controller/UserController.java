@@ -3,6 +3,7 @@ package org.jsp.ecommerceapp.controller;
 import java.util.List;
 
 import org.jsp.ecommerceapp.dto.ResponseStructure;
+import org.jsp.ecommerceapp.model.Merchant;
 import org.jsp.ecommerceapp.model.User;
 import org.jsp.ecommerceapp.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,6 +21,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
+import jakarta.servlet.http.HttpServletRequest;
+
 @RestController
 @RequestMapping("/users")
 @CrossOrigin
@@ -29,8 +32,8 @@ public class UserController {
  
  @PostMapping
 	@ResponseStatus(code = HttpStatus.CREATED)
-	public ResponseEntity<User> saveUser(@RequestBody User user){
-		return userService.saveUser(user);
+	public ResponseEntity<ResponseStructure<User>> saveUser(@RequestBody User user,HttpServletRequest request){
+		return userService.saveUser(user,request);
 	}
 	@PutMapping
 	public ResponseEntity<ResponseStructure<User>> updateUser(@RequestBody User user) {
@@ -68,5 +71,9 @@ public class UserController {
 	@GetMapping("/find-by-name/{name}")
 	public ResponseEntity<ResponseStructure<List<User>>> findByName(@PathVariable String name) {
 		return userService.findByName(name);
+	}
+	@GetMapping("/activate-user")
+	public ResponseEntity<ResponseStructure<String>> activate(@RequestParam String token){
+		return userService.activate(token);
 	}
 }

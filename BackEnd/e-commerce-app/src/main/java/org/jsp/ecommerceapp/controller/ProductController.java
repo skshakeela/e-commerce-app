@@ -30,10 +30,17 @@ public class ProductController {
 		return productService.saveProduct(product, merchant_id);
 	}
 
-	@GetMapping("/{merchant_id}")
-	public ResponseEntity<ResponseStructure<List<Product>>> findByMerchantId(int merchant_id) {
+//	@GetMapping("/{merchant_id}")
+//	public ResponseEntity<ResponseStructure<List<Product>>> findByMerchantId(int merchant_id) {
+//		return productService.findProductsByMerchantId(merchant_id);
+//	}
+	@GetMapping("/by-merchant/{merchant_id}")
+	public ResponseEntity<ResponseStructure<List<Product>>> findByMerchant(
+			@PathVariable(name = "merchant_id") int merchant_id) {
 		return productService.findProductsByMerchantId(merchant_id);
 	}
+
+	
 
 	@GetMapping
 	public ResponseEntity<ResponseStructure<List<Product>>> findAll() {
@@ -44,19 +51,29 @@ public class ProductController {
 	public ResponseEntity<ResponseStructure<List<Product>>> findByBrand(@PathVariable String brand) {
 		return productService.findByBrand(brand);
 	}
+	@GetMapping("/find-by-name/{name}")
+	public ResponseEntity<ResponseStructure<List<Product>>> findByName(@PathVariable String name) {
+		return productService.findByName(name);
+	}
 
 	@GetMapping("/find-by-category/{category}")
 	public ResponseEntity<ResponseStructure<List<Product>>> findByCategory(@PathVariable String category) {
 		return productService.findByCategory(category);
 	}
+	
 
 	@GetMapping("/find-by-id/{id}")
 	public ResponseEntity<ResponseStructure<Product>> findById(@PathVariable int id) {
 		return productService.findById(id);
 	}
 
+//	@PutMapping
+//	public ResponseEntity<ResponseStructure<Product>> updateProduct(@PathVariable int id) {
+//		return productService.findById(id);
+//	}
+	
 	@PutMapping
-	public ResponseEntity<ResponseStructure<Product>> updateProduct(@PathVariable int id) {
-		return productService.findById(id);
+	public ResponseEntity<ResponseStructure<Product>> updateProduct(@RequestBody Product product) {
+		return productService.updateProduct(product);
 	}
 }

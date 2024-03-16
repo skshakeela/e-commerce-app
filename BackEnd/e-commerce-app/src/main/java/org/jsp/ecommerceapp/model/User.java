@@ -24,6 +24,14 @@ public class User {
 	@Column(nullable = false)
 	private String password;
 	private String status;
+	private String token;
+	public String getToken() {
+		return token;
+	}
+
+	public void setToken(String token) {
+		this.token = token;
+	}
 
 	public String getPassword() {
 		return password;

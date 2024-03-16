@@ -105,6 +105,18 @@ public class ProductService {
 		return new ResponseEntity<ResponseStructure<List<Product>>>(structure, HttpStatus.OK);
 	}
 	
+	public ResponseEntity<ResponseStructure<List<Product>>> findByName(String name){
+		ResponseStructure<List<Product>> structure=new ResponseStructure<>();
+		List<Product> products=productDao.findByName(name);
+		if(products.isEmpty()) {
+			throw new ProductNotFoundException("No products found for entered name");
+		}
+		structure.setBody(products);
+		structure.setMessage("List of products for entered name");
+		structure.setStatusCode(HttpStatus.OK.value());
+		return new ResponseEntity<ResponseStructure<List<Product>>>(structure,HttpStatus.OK);
+	}
+	
 	public ResponseEntity<ResponseStructure<List<Product>>> findAll() {
 		ResponseStructure<List<Product>> structure = new ResponseStructure<>();
 		List<Product> products = productDao.findAll();
