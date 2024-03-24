@@ -39,4 +39,7 @@ public class ProductDao {
 	public List<Product> findByName(String name){
 		return productRepository.findByName(name);
 	}
+	public void delete(int id) {
+		productRepository.deleteById(id);
+	}
 }

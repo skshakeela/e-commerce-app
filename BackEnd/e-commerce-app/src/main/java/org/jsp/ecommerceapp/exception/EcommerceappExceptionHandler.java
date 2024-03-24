@@ -46,5 +46,23 @@ public class EcommerceappExceptionHandler extends ResponseEntityExceptionHandler
    	structure.setStatusCode(HttpStatus.NOT_FOUND.value());
    	return new ResponseEntity<ResponseStructure<String>>(structure,HttpStatus.NOT_FOUND);
    	}
+    
+    @ExceptionHandler(AddressNotFoundException.class)
+   	public ResponseEntity<ResponseStructure<String>> handlerANFE(AddressNotFoundException exception){
+   	ResponseStructure<String> structure=new ResponseStructure<>();
+   	structure.setBody(" Address not found");
+   	structure.setMessage(exception.getMessage());
+   	structure.setStatusCode(HttpStatus.NOT_FOUND.value());
+   	return new ResponseEntity<ResponseStructure<String>>(structure,HttpStatus.NOT_FOUND);
+   	}
+    
+    @ExceptionHandler(IllegalStateException.class)
+   	public ResponseEntity<ResponseStructure<String>> handlerISE(IllegalStateException exception){
+   	ResponseStructure<String> structure=new ResponseStructure<>();
+   	structure.setBody(" Activate your account to sign in");
+   	structure.setMessage(exception.getMessage());
+   	structure.setStatusCode(HttpStatus.NOT_FOUND.value());
+   	return new ResponseEntity<ResponseStructure<String>>(structure,HttpStatus.NOT_FOUND);
+   	}
 
 }

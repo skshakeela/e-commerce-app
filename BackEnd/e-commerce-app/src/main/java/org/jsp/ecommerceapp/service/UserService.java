@@ -7,9 +7,7 @@ import org.jsp.ecommerceapp.dao.UserDao;
 import org.jsp.ecommerceapp.dto.ResponseStructure;
 import org.jsp.ecommerceapp.exception.IdNotFoundException;
 import org.jsp.ecommerceapp.exception.InvalidCredentialsException;
-import org.jsp.ecommerceapp.exception.MerchantNotFoundException;
 import org.jsp.ecommerceapp.exception.UserNotFoundException;
-import org.jsp.ecommerceapp.model.Merchant;
 import org.jsp.ecommerceapp.model.User;
 import org.jsp.ecommerceapp.util.AccountStatus;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -111,6 +109,11 @@ public class UserService {
 		Optional<User> recUser = userDao.verify(email, password);
 		ResponseStructure<User> structure = new ResponseStructure<>();
 		if (recUser.isPresent()) {
+		User u=recUser.get();
+		if(u.getStatus().equals(AccountStatus.IN_ACTIVE.toString())) {
+			throw new IllegalStateException("invalid email or password");
+		}
+		
 			structure.setMessage("Verification Succesfull");
 			structure.setBody(recUser.get());
 			structure.setStatusCode(HttpStatus.OK.value());

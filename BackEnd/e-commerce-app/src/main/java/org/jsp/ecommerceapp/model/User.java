@@ -1,10 +1,15 @@
 package org.jsp.ecommerceapp.model;
 
+import java.util.List;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.JoinTable;
+import jakarta.persistence.OneToMany;
 
 @Entity
 public class User {
@@ -25,14 +30,46 @@ public class User {
 	private String password;
 	private String status;
 	private String token;
+	@OneToMany(mappedBy = "user")
+	private List<Address> addresses;
+	@OneToMany
+	@JoinTable(name="user_cart",joinColumns = {@JoinColumn(name="user_id")},inverseJoinColumns = {@JoinColumn(name="product_id")})
+	private List<Product> cart;
+	@OneToMany
+	@JoinTable(name="user_wishList",joinColumns = {@JoinColumn(name="user_id")},inverseJoinColumns = {@JoinColumn(name="product_id")})
+	private List<Product> wishList;
+	
 	public String getToken() {
 		return token;
 	}
-
 	public void setToken(String token) {
 		this.token = token;
 	}
 
+	public List<Product> getCart() {
+		return cart;
+	}
+
+	public void setCart(List<Product> cart) {
+		this.cart = cart;
+	}
+
+	public List<Product> getWishList() {
+		return wishList;
+	}
+
+	public void setWishList(List<Product> wishList) {
+		this.wishList = wishList;
+	}
+
+	public void setAddresses(List<Address> addresses) {
+		this.addresses = addresses;
+	}
+	
+	public List<Address> getAddresses() {
+		return addresses;
+	}
+	
 	public String getPassword() {
 		return password;
 	}
