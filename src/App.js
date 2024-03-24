@@ -8,6 +8,10 @@ import MerchantHomePage from "./Components/MerchantHomePage";
 import UserSignup from "./Components/UserSignup";
 import Error from "./Components/Error";
 import Protect from "./Components/Protect";
+import UserHomePage from "./Components/UserHomePage";
+import Protect1 from "./Components/Protect1";
+
+
 function App() {
   return (
     <div className="App">
@@ -21,6 +25,8 @@ function App() {
       <Route path="/merchanthomepage/*" element={<Protect Child={MerchantHomePage}/>}></Route>
       <Route path="/userlogin" element={<UserLogin/>}></Route>
       <Route path="/usersignup" element={<UserSignup/>}></Route>
+      <Route path="/userhomepage/*" element={<Protect1 Child={UserHomePage}/>}></Route>
+   
       
      </Routes>
      </BrowserRouter>

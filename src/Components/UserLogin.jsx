@@ -12,7 +12,9 @@ let navigate=useNavigate();
 function verifyUser(e){
   e.preventDefault();
   axios.post(`http://localhost:8080/users/verify-by-email?email=${email}&password=${password}`)
-  .then(()=>{
+  .then((res)=>{
+    console.log(res.data.body);
+    localStorage.setItem("User",JSON.stringify(res.data.body))
   navigate('/userhomepage')
   alert("login successfully")
   })
